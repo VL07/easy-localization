@@ -1,6 +1,23 @@
 import json
 import os
 
+class Language:
+    def __init__(self, d, errorOnInvalidKey) -> None:
+        self.d = d
+        self.errorOnInvalidKey = errorOnInvalidKey
+
+    def __repr__(self) -> str:
+        return repr(self.d)
+
+    def __getitem__(self, arg) -> str:
+        if arg in self.d:
+            return self.d[arg]
+        else:
+            if self.errorOnInvalidKey:
+                raise KeyError(f"'{arg}' is not a valid key")
+            print(f"'{arg}' is not a valid key")
+    
+
 class Localization:
     def __init__(self, jsonFiles: list, errorOnInvalidKey=True) -> None:
         """Load one or mores json file with all translations. Make sure the files are named after the langage so they're easier to access"""
@@ -42,4 +59,10 @@ class Localization:
     def __repr__(self) -> str:
         return repr(self.loadedFiles)
 
-            
+    def __getitem__(self, arg) -> str:
+        if arg in self.loadedFiles:
+            return Language(self.loadedFiles[arg], self.errorOnInvalidKey)
+        else:
+            if self.errorOnInvalidKey:
+                raise KeyError(f"'{arg}' is not a valid key")
+            print(f"'{arg}' is not a valid key")
