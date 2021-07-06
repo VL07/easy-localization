@@ -39,4 +39,7 @@ class Localization:
             
             self.loadedFiles[filename] = json.loads(data)
 
+    def __repr__(self) -> str:
+        return repr(self.loadedFiles)
+
             
